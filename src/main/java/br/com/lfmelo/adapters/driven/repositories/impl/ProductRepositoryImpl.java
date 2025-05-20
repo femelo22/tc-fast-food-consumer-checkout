@@ -17,29 +17,8 @@ public class ProductRepositoryImpl implements ProductRepositoryPort {
     private ProductRepositoryJpa productRepositoryJpa;
 
     @Override
-    public ProductEntity createProduct(Product product) {
-        ProductEntity productEntity = new ProductEntity(product);
-        return productRepositoryJpa.save(productEntity);
-    }
-
-    @Override
-    public Page<ProductEntity> findProduct(Specification<ProductEntity> specification, Pageable pageable) {
-        return productRepositoryJpa.findAll(specification, pageable);
-    }
-
-    @Override
     public ProductEntity findProductById(Long idProduct) {
         return productRepositoryJpa.findById(idProduct)
                 .orElseThrow(() -> new RuntimeException("Produto não encontrado!"));
-    }
-
-    @Override
-    public void editProduct(ProductEntity product) {
-        productRepositoryJpa.save(product);
-    }
-
-    @Override
-    public void deleteProduct(ProductEntity product) {
-        productRepositoryJpa.delete(product);
     }
 }
