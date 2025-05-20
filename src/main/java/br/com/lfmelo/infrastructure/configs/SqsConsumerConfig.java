@@ -1,4 +1,4 @@
-package br.com.lfmelo.configs;
+package br.com.lfmelo.infrastructure.configs;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

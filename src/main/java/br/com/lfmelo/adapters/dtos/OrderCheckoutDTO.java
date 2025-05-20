@@ -1,4 +1,4 @@
-package br.com.lfmelo.entities;
+package br.com.lfmelo.adapters.dtos;
 
 import lombok.Data;
 
