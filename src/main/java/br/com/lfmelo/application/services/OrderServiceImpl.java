@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.UUID;
 
 @Service
 @Slf4j
@@ -44,7 +45,8 @@ public class OrderServiceImpl implements OrderServicePort {
 
         order.setOrderDate(LocalDateTime.now());
         order.setTotal(dto.getTotalPrice());
-        order.setStatus(StatusOrder.RECEIVED);
+        order.setStatus(StatusOrder.FINISHED); //TODO: (por hora, ele finaliza aqui)
+        order.setAlias("ORDER-".concat(UUID.randomUUID().toString().substring(0, 7)));
 
         log.info("Salvando pedido [Transactional]..");
         OrderEntity orderSaved = orderRepositoryPort.createOrder(order, client);
