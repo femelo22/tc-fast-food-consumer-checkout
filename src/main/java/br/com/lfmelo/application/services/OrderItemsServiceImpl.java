@@ -1,4 +1,4 @@
-package br.com.lfmelo.core.services;
+package br.com.lfmelo.application.services;
 
 import br.com.lfmelo.adapters.driven.entities.OrderEntity;
 import br.com.lfmelo.adapters.driven.entities.OrderItemEntity;
@@ -30,7 +30,7 @@ public class OrderItemsServiceImpl implements OrderItemServicePort {
 
         for (OrderItemDTO item: dto.getOrderItems()) {
 
-            log.info("Buscando produto {}", item.getProductId());
+            log.info("Buscando produto ID = {}", item.getProductId());
             var product = productServicePort.findById(item.getProductId());
 
             var orderItemEntity = new OrderItemEntity();
