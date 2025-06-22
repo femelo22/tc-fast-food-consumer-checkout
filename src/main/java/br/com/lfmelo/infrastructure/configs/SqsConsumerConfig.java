@@ -20,10 +20,13 @@ public class SqsConsumerConfig {
     @Value("${aws.sendOrder.url}")
     private String QueueUrl;
 
+    @Value("${amazon.region}")
+    private String region;
+
     @Bean
     public SqsAsyncClient sqsAsyncClient() {
         return SqsAsyncClient.builder()
-                .region(Region.SA_EAST_1)
+                .region(Region.of(region))
                 .credentialsProvider(StaticCredentialsProvider.create(AwsBasicCredentials.create(accessKey, secretKey)))
                 .build();
     }

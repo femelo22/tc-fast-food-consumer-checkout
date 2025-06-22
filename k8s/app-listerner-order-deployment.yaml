@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tc-listener-order
+  namespace: namespace-tc
+  labels:
+    app: tc-listener-order
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tc-listener-order
+  template:
+    metadata:
+      labels:
+        app: tc-listener-order
+    spec:
+      containers:
+        - name: tc-listener-order
+          image: lfmelo/tc-listener-order:3.0   # <== Substitua pelo seu usuário e tag do Docker Hub!
+          ports:
+            - containerPort: 8081
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:mysql://mysql:3306/fast-food?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&useSSL=false
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: username
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: password
+            - name: SPRING_JPA_HIBERNATE_DDL_AUTO
+              value: update
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secret
+                  key: aws-access-key-id
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secret
+                  key: aws-secret-access-key
+            - name: AWS_REGION
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secret
+                  key: aws-region
+          resources:
+            requests:
+              cpu: "200m" # ou 0.2
+              memory: "256Mi"
+            limits:
+              cpu: "500m" # ou 0.5
+              memory: "512Mi"
